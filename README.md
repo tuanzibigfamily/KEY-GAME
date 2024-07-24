@@ -7,7 +7,8 @@
 入门教学推荐这个视频https://www.bilibili.com/video/BV11p4y1i74A
 爱的力量，是无限的.jpg
 
-该有的注释我基本上都打上了，在text里面的两个.cpp文件内供参考
+该有的注释我基本上都打上了，在text里面的两个.cpp文件内供参考。
+
 如果后来的友友想参加，请创建自己的文件夹分支，方法见https://blog.csdn.net/Fly_1213/article/details/89294549
 
 ![Image](https://github.com/user-attachments/assets/3f21ac56-5dce-4cb9-9f7e-ef0ecb7c6ff2)
