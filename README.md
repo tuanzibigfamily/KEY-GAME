@@ -1,7 +1,9 @@
-# KEY-GAME 同人小游戏
-2024.7.24日完成，小游戏只是为爱发电做的，还有许多需要完善的地方，欢迎登录github参与建设，项目地址为：https://github.com/tuanzibigfamily/KEY-GAME
+# KEY-GAME 同人小游戏-古河面包店大危机！
+游戏介绍：某天，祥和的古河面包店遭到了突然闯入的春园阳平和国崎往人，为了保护面包店，Nagisa和亚由（友情出演w）站了出来,赶走了这两个怪家伙，古河面包店最终恢复了和平。
 
 制作人员：森匠，汐风
+
+2024.7.24日完成，小游戏只是为爱发电做的，还有许多需要完善的地方，欢迎登录github参与建设，项目地址为：https://github.com/tuanzibigfamily/KEY-GAME
 
 在Visual Studio 2022（10+)版本上可正常运行，记得去项目-属性内选择多字节符，还有easyx图形库的使用，
 入门教学推荐这个视频https://www.bilibili.com/video/BV11p4y1i74A
