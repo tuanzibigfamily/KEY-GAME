@@ -1,5 +1,5 @@
 # KEY-GAME
-2024.7.24日完成，小游戏只是为爱发电做的，还有许多需要完善的地方，欢迎登录github参与建设，项目地址为：https://github.com/tuanzibigfamily/KEY-GAME/
+2024.7.24日完成，小游戏只是为爱发电做的，还有许多需要完善的地方，欢迎登录github参与建设，项目地址为：https://github.com/tuanzibigfamily/KEY-GAME
 
 制作人员：森匠，汐风
 
