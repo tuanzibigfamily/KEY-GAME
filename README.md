@@ -1,4 +1,4 @@
-# KEY-GAME
+# KEY-GAME 同人小游戏
 2024.7.24日完成，小游戏只是为爱发电做的，还有许多需要完善的地方，欢迎登录github参与建设，项目地址为：https://github.com/tuanzibigfamily/KEY-GAME
 
 制作人员：森匠，汐风
@@ -7,7 +7,8 @@
 入门教学推荐这个视频https://www.bilibili.com/video/BV11p4y1i74A
 爱的力量，是无限的.jpg
 
-如果后来的友友想参加，请创建文件夹分支，方法见https://blog.csdn.net/Fly_1213/article/details/89294549
+该有的注释我基本上都打上了，在text里面的两个.cpp文件内供参考
+如果后来的友友想参加，请创建自己的文件夹分支，方法见https://blog.csdn.net/Fly_1213/article/details/89294549
 
 ![Image](https://github.com/user-attachments/assets/3f21ac56-5dce-4cb9-9f7e-ef0ecb7c6ff2)
 
@@ -30,4 +31,6 @@
 
 图片说明-通关界面
 ![图片说明-通关界面](https://github.com/user-attachments/assets/629a1064-3e5e-495c-85f3-dc5d2e0556e5)
+
+
 **********************************************************后续再补充
