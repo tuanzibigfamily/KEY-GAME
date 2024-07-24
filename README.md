@@ -12,7 +12,7 @@ C++实现的key同人马里奥式游戏
 ![图片说明-主页面](https://github.com/user-attachments/assets/219871f6-bd22-417e-8e42-116529a90d78)
 
 图片说明-简介：
-![图片说明-简介](https://github.com/user-attachments/assets/dcce6743-733b-41a0-a64c-1c9eaae83073)
+![图片说明-简介](https://github.com/user-attachments/assets/70b5c387-6242-4fca-b242-c8f51af190f2)
 
 图片说明-游戏界面：
 ![图片说明-游戏界面](https://github.com/user-attachments/assets/1fca0edd-f482-428f-8e58-dd72f2827496)
