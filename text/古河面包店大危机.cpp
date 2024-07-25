@@ -1,22 +1,22 @@
-//´´×÷Õß É­½³£¬Ï«·ç£¬2024.7.24ÈÕÍê³É£¬Ğ¡ÓÎÏ·Ö»ÊÇÎª°®·¢µç×öµÄ£¬»¹ÓĞĞí¶àĞèÒªÍêÉÆµÄµØ·½£¬
-// »¶Ó­µÇÂ¼github²ÎÓë½¨Éè£¬ÏîÄ¿µØÖ·Îª£ºhttps://github.com/tuanzibigfamily/KEY-GAME
+//åˆ›ä½œè€… æ£®åŒ ï¼Œæ±é£ï¼Œ2024.7.24æ—¥å®Œæˆï¼Œå°æ¸¸æˆåªæ˜¯ä¸ºçˆ±å‘ç”µåšçš„ï¼Œè¿˜æœ‰è®¸å¤šéœ€è¦å®Œå–„çš„åœ°æ–¹ï¼Œ
+// æ¬¢è¿ç™»å½•githubå‚ä¸å»ºè®¾ï¼Œé¡¹ç›®åœ°å€ä¸ºï¼šhttps://github.com/tuanzibigfamily/KEY-GAME
 #include<stdio.h>
 #include <graphics.h>
 #include <conio.h>
 #include <windows.h>
 #include <mmsystem.h>  
-#pragma comment(lib,"winmm.lib")//¼ÓÔØ¾²Ì¬¿â
+#pragma comment(lib,"winmm.lib")//åŠ è½½é™æ€åº“
 #include <ctime>
-#include <iostream> // °üº¬ÊäÈëÊä³öÁ÷
+#include <iostream> // åŒ…å«è¾“å…¥è¾“å‡ºæµ
 #include<math.h>
 #include <windows.h>  
 #include<string>
-#include <cstdlib>    // ÒıÈëstdlib.h
-#include"ÓÎÏ·¿ªÊ¼½çÃæ.cpp"
+#include <cstdlib>    // å¼•å…¥stdlib.h
+#include"æ¸¸æˆå¼€å§‹ç•Œé¢.cpp"
 #undef UNICODE
 #undef _UNICODE
 
-inline void putimage_alpha(int x, int y, IMAGE* img)//ÈËÎï±³¾°É«Í¸Ã÷»¯
+inline void putimage_alpha(int x, int y, IMAGE* img)//äººç‰©èƒŒæ™¯è‰²é€æ˜åŒ–
 {
     int w = img->getwidth();
     int h = img->getheight();
@@ -24,15 +24,15 @@ inline void putimage_alpha(int x, int y, IMAGE* img)//ÈËÎï±³¾°É«Í¸Ã÷»¯
         GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
 }
 
-// ¶¨Òå´°¿Ú´óĞ¡ºÍÓÎÏ·Ïà¹Ø³£Á¿
+// å®šä¹‰çª—å£å¤§å°å’Œæ¸¸æˆç›¸å…³å¸¸é‡
 const int WindowWidth = 800;
 const int WindowHeight = 600;
 const int GroundHeight = 32;
 int idx_current_anim = 0;
 static int counter = 0;
 
-int pause_count = 0;//ÔİÍ£±äÁ¿
-// ÓÎÏ·×´Ì¬  
+int pause_count = 0;//æš‚åœå˜é‡
+// æ¸¸æˆçŠ¶æ€  
 enum GameState { 
     PLAYING,
     PAUSED,
@@ -40,52 +40,52 @@ enum GameState {
     GAME_OVER
 };
 
-// ¼ÓÔØÍ¼Æ¬×ÊÔ´
-IMAGE imgBackground1_1; // 1-1¹Ø¿¨±³¾°
-IMAGE imgBackground1_2; // 1-2¹Ø¿¨±³¾°
-IMAGE imgBackground1_3; // 1-3¹Ø¿¨±³¾°
+// åŠ è½½å›¾ç‰‡èµ„æº
+IMAGE imgBackground1_1; // 1-1å…³å¡èƒŒæ™¯
+IMAGE imgBackground1_2; // 1-2å…³å¡èƒŒæ™¯
+IMAGE imgBackground1_3; // 1-3å…³å¡èƒŒæ™¯
 IMAGE gameover_background;
 IMAGE gamewin_background;
 
-IMAGE imgGround;        // µØÃæÍ¼
+IMAGE imgGround;        // åœ°é¢å›¾
 
-IMAGE imgNagisa;         // ÈËÎïÍ¼
-IMAGE imgMonster_One;       // ´ºÔ°ºÍÍùÈË1Í¼
+IMAGE imgNagisa;         // äººç‰©å›¾
+IMAGE imgMonster_One;       // æ˜¥å›­å’Œå¾€äºº1å›¾
 IMAGE imgMonster_OneTurn;
 IMAGE imgMonster_Oneshouji;
 IMAGE imgMonster_Oneshouji_zhezhao;
-IMAGE imgMonster_Tow;       // ´ºÔ°ºÍÍùÈË2Í¼
+IMAGE imgMonster_Tow;       // æ˜¥å›­å’Œå¾€äºº2å›¾
 IMAGE imgMonster_TowTurn;
 
-IMAGE imgBullet_yuan;        // ×Óµ¯Í¼
+IMAGE imgBullet_yuan;        // å­å¼¹å›¾
 IMAGE imgBullet_zhezhao;
-IMAGE imgHaiXing_Animation_yuan1;//×Óµ¯¶¯»­Í¼£¬ºÚµ×°×µ×Î»ÔËËãÍ¼
+IMAGE imgHaiXing_Animation_yuan1;//å­å¼¹åŠ¨ç”»å›¾ï¼Œé»‘åº•ç™½åº•ä½è¿ç®—å›¾
 IMAGE imgHaiXing_Animation_zhezhao1;
 
-IMAGE imgHaiXing_Animation_yuan2;//×Óµ¯¶¯»­Í¼
+IMAGE imgHaiXing_Animation_yuan2;//å­å¼¹åŠ¨ç”»å›¾
 IMAGE imgHaiXing_Animation_zhezhao2;
 
-IMAGE imgHaiXing_Animation_yuan3;//×Óµ¯¶¯»­Í¼
+IMAGE imgHaiXing_Animation_yuan3;//å­å¼¹åŠ¨ç”»å›¾
 IMAGE imgHaiXing_Animation_zhezhao3;
 
-IMAGE imgHaiXing_Animation_yuan4;//×Óµ¯¶¯»­Í¼
+IMAGE imgHaiXing_Animation_yuan4;//å­å¼¹åŠ¨ç”»å›¾
 IMAGE imgHaiXing_Animation_zhezhao4;
 
-IMAGE imgHaiXing_Animation_yuan5;//×Óµ¯¶¯»­Í¼
+IMAGE imgHaiXing_Animation_yuan5;//å­å¼¹åŠ¨ç”»å›¾
 IMAGE imgHaiXing_Animation_zhezhao5;
 
- IMAGE imgBrick_1;         // ×©¿é1Í¼
- IMAGE imgBrick_2;         // ×©¿é2Í¼
- IMAGE imgBrick_3;         // ×©¿é3Í¼
- IMAGE imgBrick_4;         // ×©¿é4Í¼
- IMAGE imgBrick_5;         // ×©¿é5Í¼
- IMAGE imgBrick_6;         // ×©¿é6Í¼
- IMAGE imgBrick_7;         // ×©¿é7Í¼
- IMAGE imgBrick_8;         // ×©¿é8Í¼
- IMAGE imgBrick_9;         // ×©¿é9Í¼
+ IMAGE imgBrick_1;         // ç –å—1å›¾
+ IMAGE imgBrick_2;         // ç –å—2å›¾
+ IMAGE imgBrick_3;         // ç –å—3å›¾
+ IMAGE imgBrick_4;         // ç –å—4å›¾
+ IMAGE imgBrick_5;         // ç –å—5å›¾
+ IMAGE imgBrick_6;         // ç –å—6å›¾
+ IMAGE imgBrick_7;         // ç –å—7å›¾
+ IMAGE imgBrick_8;         // ç –å—8å›¾
+ IMAGE imgBrick_9;         // ç –å—9å›¾
  
 
- //¶¯»­Êı×é
+ //åŠ¨ç”»æ•°ç»„
  
  IMAGE img_ayuyi_left1;
  IMAGE img_ayuyi_left2;
@@ -103,11 +103,11 @@ IMAGE imgHaiXing_Animation_zhezhao5;
  IMAGE img_ayuyi_right3;
  IMAGE img_ayuyi_right4;
 
- //IMAGE Cloudy;//ÔÆ¶ä
+ //IMAGE Cloudy;//äº‘æœµ
  struct Brick
  {
-     int brick_width, brick_height; // ×©¿é´óĞ¡  
-     int x, y;//×©¿é×ø±ê
+     int brick_width, brick_height; // ç –å—å¤§å°  
+     int x, y;//ç –å—åæ ‡
  };
  Brick brick;
  Brick brick_1;
@@ -122,37 +122,37 @@ IMAGE imgHaiXing_Animation_zhezhao5;
 
  GameState gameState = PLAYING;
 
- // ¶¨ÒåÈËÎïµÄ½á¹¹Ìå
-int score = 0;      //È«¾Ö±äÁ¿£¬Ö÷½Ç»ñµÃµÄ·ÖÊı
-char scoreStr[20];  // ·ÖÊı×ª»»Îª×Ö·û´®ºó²»»á³¬¹ı19¸ö×Ö·û£¨°üÀ¨'\0'£© 
+ // å®šä¹‰äººç‰©çš„ç»“æ„ä½“
+int score = 0;      //å…¨å±€å˜é‡ï¼Œä¸»è§’è·å¾—çš„åˆ†æ•°
+char scoreStr[20];  // åˆ†æ•°è½¬æ¢ä¸ºå­—ç¬¦ä¸²åä¸ä¼šè¶…è¿‡19ä¸ªå­—ç¬¦ï¼ˆåŒ…æ‹¬'\0'ï¼‰ 
 struct Nagisa {
-    int x, y;       // ÈËÎïµÄ×ø±ê
-    int vx, vy;     // ÈËÎïµÄËÙ¶È
-    bool isJumping; // ÊÇ·ñÔÚÌøÔ¾ÖĞ
-    int Nagisa_width, Nagisa_height;//ÈËÎïÍ¼Ïñ¸ß¿í
-    int iframe;//¼ÓÔØµÚ¼¸¸±Í¼£¬ÕâÑù¾ÍÄÜÈÃÈËÎï¿´ÉÏÈ¥¶¯ÆğÀ´ÁË
-    int turn;//ÈËÎïÔË¶¯·½Ïò
+    int x, y;       // äººç‰©çš„åæ ‡
+    int vx, vy;     // äººç‰©çš„é€Ÿåº¦
+    bool isJumping; // æ˜¯å¦åœ¨è·³è·ƒä¸­
+    int Nagisa_width, Nagisa_height;//äººç‰©å›¾åƒé«˜å®½
+    int iframe;//åŠ è½½ç¬¬å‡ å‰¯å›¾ï¼Œè¿™æ ·å°±èƒ½è®©äººç‰©çœ‹ä¸Šå»åŠ¨èµ·æ¥äº†
+    int turn;//äººç‰©è¿åŠ¨æ–¹å‘
     int health;
 };
 Nagisa nagisa;
 
-// ¶¨Òå´ºÔ°ºÍÍùÈËµÄ½á¹¹Ìå
+// å®šä¹‰æ˜¥å›­å’Œå¾€äººçš„ç»“æ„ä½“
 struct Monster {
-    int x, y;       // ´ºÔ°ºÍÍùÈËµÄ×ø±ê
-    int vx;         // ´ºÔ°ºÍÍùÈËµÄºáÏòËÙ¶È
+    int x, y;       // æ˜¥å›­å’Œå¾€äººçš„åæ ‡
+    int vx;         // æ˜¥å›­å’Œå¾€äººçš„æ¨ªå‘é€Ÿåº¦
     int health;
-    int turn;//ÈËÎïÔË¶¯·½Ïò
+    int turn;//äººç‰©è¿åŠ¨æ–¹å‘
 };
 
-// ¶¨Òå×Óµ¯µÄ½á¹¹Ìå
+// å®šä¹‰å­å¼¹çš„ç»“æ„ä½“
 struct Bullet {
-    int x, y;       // ×Óµ¯µÄ×ø±ê
-    int vx;         // ×Óµ¯µÄËÙ¶È
-    bool active;    // ×Óµ¯ÊÇ·ñ¼¤»î
-    int iframe;//¼ÓÔØµÚ¼¸¸±Í¼£¬ÕâÑù¾ÍÄÜÈÃ×Óµ¯¿´ÉÏÈ¥¶¯ÆğÀ´ÁË
+    int x, y;       // å­å¼¹çš„åæ ‡
+    int vx;         // å­å¼¹çš„é€Ÿåº¦
+    bool active;    // å­å¼¹æ˜¯å¦æ¿€æ´»
+    int iframe;//åŠ è½½ç¬¬å‡ å‰¯å›¾ï¼Œè¿™æ ·å°±èƒ½è®©å­å¼¹çœ‹ä¸Šå»åŠ¨èµ·æ¥äº†
 };
 
-// µ±Ç°¹Ø¿¨µÄÃ¶¾Ù
+// å½“å‰å…³å¡çš„æšä¸¾
 enum class Level {
     Level1_1,
     Level1_2,
@@ -160,43 +160,43 @@ enum class Level {
     GameOver
 };
 
-// µ±Ç°¹Ø¿¨
+// å½“å‰å…³å¡
 Level currentLevel = Level::Level1_1;
 
 
-// ³õÊ¼»¯ÓÎÏ·
+// åˆå§‹åŒ–æ¸¸æˆ
 void initGame() {
 
-    initgraph(WindowWidth, WindowHeight); // ³õÊ¼»¯Í¼ĞÎ´°¿Ú
-    loadimage(&imgBackground1_1, ("res\\background1_One .png")); // ÔØÈë1-1¹Ø¿¨±³¾°Í¼Ïñ
-    loadimage(&imgBackground1_2, ("res\\background1_One .png")); // ÔØÈë1-2¹Ø¿¨±³¾°Í¼Ïñ
-    loadimage(&imgBackground1_3, ("res\\background1_One .png")); // ÔØÈë1-3¹Ø¿¨±³¾°Í¼Ïñ
+    initgraph(WindowWidth, WindowHeight); // åˆå§‹åŒ–å›¾å½¢çª—å£
+    loadimage(&imgBackground1_1, ("res\\background1_One .png")); // è½½å…¥1-1å…³å¡èƒŒæ™¯å›¾åƒ
+    loadimage(&imgBackground1_2, ("res\\background1_One .png")); // è½½å…¥1-2å…³å¡èƒŒæ™¯å›¾åƒ
+    loadimage(&imgBackground1_3, ("res\\background1_One .png")); // è½½å…¥1-3å…³å¡èƒŒæ™¯å›¾åƒ
     loadimage(&gameover_background, ("res\\gameover_background.jpg"),800,600);
     loadimage(&gamewin_background, ("res\\gamewinbackground.png"), 800, 600);
-    loadimage(&imgGround, _T("res\\ground.png")); // ÔØÈëµØÃæÍ¼Ïñ
+    loadimage(&imgGround, _T("res\\ground.png")); // è½½å…¥åœ°é¢å›¾åƒ
 
-    loadimage(&imgNagisa, _T("res\\nagisa.png")); // ÔØÈëÈËÎïÍ¼Ïñ
-    loadimage(&imgMonster_One, _T("res\\Monster_One.png")); // ÔØÈë´ºÔ°ºÍÍùÈË1Í¼Ïñ
+    loadimage(&imgNagisa, _T("res\\nagisa.png")); // è½½å…¥äººç‰©å›¾åƒ
+    loadimage(&imgMonster_One, _T("res\\Monster_One.png")); // è½½å…¥æ˜¥å›­å’Œå¾€äºº1å›¾åƒ
     loadimage(&imgMonster_One, _T("res\\Monster_One.png"));
     loadimage(&imgMonster_OneTurn, _T("res\\Monster_OneTurn.png"));
     loadimage(&imgMonster_Oneshouji, _T("res\\Monster_Oneshouji.png"),45,60);
     loadimage(&imgMonster_Oneshouji_zhezhao, _T("res\\Monster_Oneshouji_zhezhao.png"), 45, 60);
     
-    loadimage(&imgMonster_Tow, _T("res\\Monster_Tow.png"));// ÔØÈë´ºÔ°ºÍÍùÈË2Í¼Ïñ
+    loadimage(&imgMonster_Tow, _T("res\\Monster_Tow.png"));// è½½å…¥æ˜¥å›­å’Œå¾€äºº2å›¾åƒ
     loadimage(&imgMonster_TowTurn, _T("res\\Monster_TowTurn.png"));
-    loadimage(&imgBullet_yuan, _T("res\\×Óµ¯ËØ²Ä1.png", 20, 20)); // ÔØÈë×Óµ¯Í¼Ïñ
-    loadimage(&imgBullet_zhezhao, _T("res\\×Óµ¯ËØ²Ä2.png", 20, 20));
-    loadimage(&imgBrick_1, "res\\brick\\1.png");// ÔØÈë×©¿é1Í¼Ïñ
-    loadimage(&imgBrick_2, "res\\brick\\2.png");// ÔØÈë×©¿é2Í¼Ïñ
-    loadimage(&imgBrick_3, "res\\brick\\3.png");// ÔØÈë×©¿é3Í¼Ïñ
-    loadimage(&imgBrick_4, "res\\brick\\4.png");// ÔØÈë×©¿é4Í¼Ïñ
-    loadimage(&imgBrick_5, "res\\brick\\5.png");// ÔØÈë×©¿é5Í¼Ïñ
-    loadimage(&imgBrick_6, "res\\brick\\6.png");// ÔØÈë×©¿é6Í¼Ïñ
-    loadimage(&imgBrick_7, "res\\brick\\7.png");// ÔØÈë×©¿é7Í¼Ïñ
-    loadimage(&imgBrick_8, "res\\brick\\8.png");// ÔØÈë×©¿é8Í¼Ïñ
-    loadimage(&imgBrick_9, "res\\brick\\9.png");// ÔØÈë×©¿é9Í¼Ïñ
-    //Æ´´ÕÂ·¾¶
-    /* std::wstring path = L"res\\ÈËÎï¶¯»­\\left\\tuskima_ayui_left" + std::to_wstring(i) + L".png";*/
+    loadimage(&imgBullet_yuan, _T("res\\å­å¼¹ç´ æ1.png", 20, 20)); // è½½å…¥å­å¼¹å›¾åƒ
+    loadimage(&imgBullet_zhezhao, _T("res\\å­å¼¹ç´ æ2.png", 20, 20));
+    loadimage(&imgBrick_1, "res\\brick\\1.png");// è½½å…¥ç –å—1å›¾åƒ
+    loadimage(&imgBrick_2, "res\\brick\\2.png");// è½½å…¥ç –å—2å›¾åƒ
+    loadimage(&imgBrick_3, "res\\brick\\3.png");// è½½å…¥ç –å—3å›¾åƒ
+    loadimage(&imgBrick_4, "res\\brick\\4.png");// è½½å…¥ç –å—4å›¾åƒ
+    loadimage(&imgBrick_5, "res\\brick\\5.png");// è½½å…¥ç –å—5å›¾åƒ
+    loadimage(&imgBrick_6, "res\\brick\\6.png");// è½½å…¥ç –å—6å›¾åƒ
+    loadimage(&imgBrick_7, "res\\brick\\7.png");// è½½å…¥ç –å—7å›¾åƒ
+    loadimage(&imgBrick_8, "res\\brick\\8.png");// è½½å…¥ç –å—8å›¾åƒ
+    loadimage(&imgBrick_9, "res\\brick\\9.png");// è½½å…¥ç –å—9å›¾åƒ
+    //æ‹¼å‡‘è·¯å¾„
+    /* std::wstring path = L"res\\äººç‰©åŠ¨ç”»\\left\\tuskima_ayui_left" + std::to_wstring(i) + L".png";*/
     loadimage(&img_ayuyi_left1, _T("res\\left\\tuskima_ayui_left1.png"));
     loadimage(&img_ayuyi_left2, ("res\\left\\tuskima_ayui_left2.png"));
     loadimage(&img_ayuyi_left3, ("res\\left\\tuskima_ayui_left3.png"));
@@ -213,7 +213,7 @@ void initGame() {
     loadimage(&img_ayuyi_right2, ("res\\right\\tuskima_ayui_right2.png"));
     loadimage(&img_ayuyi_right3, ("res\\right\\tuskima_ayui_right3.png"));
     loadimage(&img_ayuyi_right4, ("res\\\right\\tuskima_ayui_right4.png"));
-    //¼ÓÔØ×Óµ¯¶¯»­Í¼Æ¬
+    //åŠ è½½å­å¼¹åŠ¨ç”»å›¾ç‰‡
     loadimage(&imgHaiXing_Animation_yuan1, _T("res\\bulletanimation\\fuko_HaiXing_Animation_yuan1.png"), 20, 20);
     loadimage(&imgHaiXing_Animation_yuan2, ("res\\bulletanimation\\fuko_HaiXing_Animation_yuan2.png"), 20, 20);
     loadimage(&imgHaiXing_Animation_yuan3, ("res\\bulletanimation\\fuko_HaiXing_Animation_yuan3.png"), 20, 20);
@@ -227,19 +227,19 @@ void initGame() {
     loadimage(&imgHaiXing_Animation_zhezhao4, ("res\\bulletanimation\\fuko_HaiXing_Animation_zhezhao4.png"), 20, 20);
     loadimage(&imgHaiXing_Animation_zhezhao5, ("res\\bulletanimation\\fuko_HaiXing_Animation_zhezhao5.png"), 20, 20);
 
-    mciSendString("open ¿ªÊ¼ÒôÀÖ.wav alias BGM_PLAYING", NULL, 0, NULL);//**************ÒôÁ¿Ì«´ó 7.24ĞŞ¸ÄÍê
-    mciSendString("open ½áÊøÒôÀÖ.wav alias BGM_GAMEOVER", NULL, 0, NULL);
-    mciSendString("open ×Óµ¯.mp3 alias bullet", NULL, 0, NULL);
-    mciSendString("open ÌøÔ¾.mp3 alias jump", NULL, 0, NULL);
-    mciSendString("open ×Óµ¯´òµ½µĞÈË.wav alias hit", NULL, 0, NULL);
-    mciSendString("open µĞÈËµ¹ÏÂ.wav alias cy", NULL, 0, NULL);
-    mciSendString("open ½ÇÉ«µ¹ÏÂ.wav alias death", NULL, 0, NULL);
-    /*loadimage(&Cloudy, "res\\background\\yun_1.png");*///ÔØÈëÔÆ¶äÍ¼Ïñ
-    HWND hwnd = GetHWnd(); //»ñÈ¡´°¿ÚÃû¾ä±úº¯Êı
-    SetWindowText(hwnd, "¹ÅºÓÃæ°üµê´óÎ£»ú");//
+    mciSendString("open å¼€å§‹éŸ³ä¹.wav alias BGM_PLAYING", NULL, 0, NULL);//**************éŸ³é‡å¤ªå¤§ 7.24ä¿®æ”¹å®Œ
+    mciSendString("open ç»“æŸéŸ³ä¹.wav alias BGM_GAMEOVER", NULL, 0, NULL);
+    mciSendString("open å­å¼¹.mp3 alias bullet", NULL, 0, NULL);
+    mciSendString("open è·³è·ƒ.mp3 alias jump", NULL, 0, NULL);
+    mciSendString("open å­å¼¹æ‰“åˆ°æ•Œäºº.wav alias hit", NULL, 0, NULL);
+    mciSendString("open æ•Œäººå€’ä¸‹.wav alias cy", NULL, 0, NULL);
+    mciSendString("open è§’è‰²å€’ä¸‹.wav alias death", NULL, 0, NULL);
+    /*loadimage(&Cloudy, "res\\background\\yun_1.png");*///è½½å…¥äº‘æœµå›¾åƒ
+    HWND hwnd = GetHWnd(); //è·å–çª—å£åå¥æŸ„å‡½æ•°
+    SetWindowText(hwnd, "å¤æ²³é¢åŒ…åº—å¤§å±æœº");//
 }
 
-// »æÖÆ±³¾°
+// ç»˜åˆ¶èƒŒæ™¯
 void drawBackground() {
     switch (currentLevel) {
     case Level::Level1_1:
@@ -256,7 +256,7 @@ void drawBackground() {
     }
 }
 
-// »æÖÆµØÃæ
+// ç»˜åˆ¶åœ°é¢
 void drawGround() 
 {
     for (int i = 0; i < WindowWidth; i += imgGround.getwidth()) {
@@ -265,23 +265,23 @@ void drawGround()
    
 }
 
-// »æÖÆ×©¿é
+// ç»˜åˆ¶ç –å—
 void drawBricks() {
-    // ¸ù¾İµ±Ç°¹Ø¿¨»æÖÆ²»Í¬µÄ×©¿é
+    // æ ¹æ®å½“å‰å…³å¡ç»˜åˆ¶ä¸åŒçš„ç –å—
     switch (currentLevel) {
     case Level::Level1_1:
-        // 1-1¹Ø¿¨µÄ×©¿éÎ»ÖÃ£¬¿ÉÒÔ¸ù¾İĞèÒª½øĞĞµ÷Õû
+        // 1-1å…³å¡çš„ç –å—ä½ç½®ï¼Œå¯ä»¥æ ¹æ®éœ€è¦è¿›è¡Œè°ƒæ•´
         putimage(brick.x = 250,brick.y = WindowHeight - GroundHeight - 100, &imgBrick_6);
         putimage(brick_1.x = 200, brick_1.y = WindowHeight - GroundHeight - 50, &imgBrick_2);
         break;
     case Level::Level1_2:
-        // 1-2¹Ø¿¨µÄ×©¿éÎ»ÖÃ£¬¿ÉÒÔ¸ù¾İĞèÒª½øĞĞµ÷Õû
+        // 1-2å…³å¡çš„ç –å—ä½ç½®ï¼Œå¯ä»¥æ ¹æ®éœ€è¦è¿›è¡Œè°ƒæ•´
         putimage( 250, WindowHeight - GroundHeight - 100, &imgBrick_6);
         putimage( 200,WindowHeight - GroundHeight - 50, &imgBrick_2);
         putimage(brick_2.x = 400, brick_2.y = WindowHeight - GroundHeight - 150, &imgBrick_3);
         break;
     case Level::Level1_3:
-        // 1-3¹Ø¿¨µÄ×©¿éÎ»ÖÃ£¬¿ÉÒÔ¸ù¾İĞèÒª½øĞĞµ÷Õû
+        // 1-3å…³å¡çš„ç –å—ä½ç½®ï¼Œå¯ä»¥æ ¹æ®éœ€è¦è¿›è¡Œè°ƒæ•´
         putimage(brick_3.x = 600, brick_3.y = WindowHeight - GroundHeight - 200, &imgBrick_6);
         putimage(brick_4.x = 650, brick_4.y = WindowHeight - GroundHeight - 250, &imgBrick_7);
         putimage(250, WindowHeight - GroundHeight - 100, &imgBrick_6);
@@ -293,38 +293,38 @@ void drawBricks() {
     }
 }
 
-// »æÖÆÈËÎï
+// ç»˜åˆ¶äººç‰©
 void drawNagisa(Nagisa& nagisa) {
     putimage(nagisa.x, nagisa.y, &imgNagisa, SRCAND); 
-    //Ìí¼ÓÎ»ÔËËãºêºê£º ¡° SRCAND ¡± ×öÓëÔËËã ºê£º ¡°SRCPAINT¡± ×ö»òÔËËã
+    //æ·»åŠ ä½è¿ç®—å®å®ï¼š â€œ SRCAND â€ åšä¸è¿ç®— å®ï¼š â€œSRCPAINTâ€ åšæˆ–è¿ç®—
 }
-//½ÇÉ«¶¯»­ÊµÏÖ
+//è§’è‰²åŠ¨ç”»å®ç°
 void show_animation(Nagisa& nagisa)
 {
 
 }
         
-// »æÖÆ´ºÔ°ºÍÍùÈË
+// ç»˜åˆ¶æ˜¥å›­å’Œå¾€äºº
 void drawMonster(Monster& monster_One, Monster& monster_Tow) {
    
 }
-// »æÖÆ×Óµ¯
+// ç»˜åˆ¶å­å¼¹
 void drawBullet(Bullet& bullet) {
     if (bullet.active) {
         
-        putimage(bullet.x, bullet.y, &imgBullet_zhezhao, SRCAND);//Ìí¼ÓÎ»ÔËËãºêºê£º ¡° SRCAND ¡± ×öÓëÔËËã£¬Ïû³ı°×É«²¿·Ö
-        //ºê£º ¡°SRCPAINT¡± ×ö»òÔËËã£¬Ïû³ıºÚ±ß
-          //ÏÈ¶ÔÕÚÕÖ²ã×öÓëÔËËã±£ÁôºÚº£ĞÇÖ÷Ìå£¬ÔÙ¶ÔÔ­Í¼×ö»òÔËËã£¬±£ÁôÔ­Í¼º£ĞÇÖ÷Ìåµş¼ÓÉÏ×öÁËÓëÔËËãµÄÕÚÕÖ²ã
-          // ÏêÇé¼û"https://blog.csdn.net/m0_60777643/article/details/122833558"
+        putimage(bullet.x, bullet.y, &imgBullet_zhezhao, SRCAND);//æ·»åŠ ä½è¿ç®—å®å®ï¼š â€œ SRCAND â€ åšä¸è¿ç®—ï¼Œæ¶ˆé™¤ç™½è‰²éƒ¨åˆ†
+        //å®ï¼š â€œSRCPAINTâ€ åšæˆ–è¿ç®—ï¼Œæ¶ˆé™¤é»‘è¾¹
+          //å…ˆå¯¹é®ç½©å±‚åšä¸è¿ç®—ä¿ç•™é»‘æµ·æ˜Ÿä¸»ä½“ï¼Œå†å¯¹åŸå›¾åšæˆ–è¿ç®—ï¼Œä¿ç•™åŸå›¾æµ·æ˜Ÿä¸»ä½“å åŠ ä¸Šåšäº†ä¸è¿ç®—çš„é®ç½©å±‚
+          // è¯¦æƒ…è§"https://blog.csdn.net/m0_60777643/article/details/122833558"
         putimage(bullet.x, bullet.y, &imgBullet_yuan, SRCPAINT); 
 
     }
 }
 
-// ¸üĞÂÓÎÏ·×´Ì¬
+// æ›´æ–°æ¸¸æˆçŠ¶æ€
 void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& monster_Tow)
 {
-        // ´¦Àí¼üÅÌÊäÈë£¬¿ØÖÆÈËÎïµÄÒÆ¶¯ºÍÌøÔ¾ 
+        // å¤„ç†é”®ç›˜è¾“å…¥ï¼Œæ§åˆ¶äººç‰©çš„ç§»åŠ¨å’Œè·³è·ƒ 
          if (GetAsyncKeyState('A'))
          {
              nagisa.turn = -1;
@@ -348,12 +348,12 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
 
         }/* putimage(brick_2.x = 400, brick_2.y = WindowHeight - GroundHeight - 150, &imgBrick_3);*/
         if (GetAsyncKeyState('W')&&!nagisa.isJumping )
-        { // Èç¹û°´'w'Ã»ÓĞÅö×²ÇÒÈËÎïÃ»ÓĞÌøÔ¾£¬ÔòÈËÎïÏòÉÏÌøÔ¾
+        { // å¦‚æœæŒ‰'w'æ²¡æœ‰ç¢°æ’ä¸”äººç‰©æ²¡æœ‰è·³è·ƒï¼Œåˆ™äººç‰©å‘ä¸Šè·³è·ƒ
             nagisa.iframe = +1;
-            nagisa.vy = -15; // ÉèÖÃÌøÔ¾³õËÙ¶È
+            nagisa.vy = -15; // è®¾ç½®è·³è·ƒåˆé€Ÿåº¦
             nagisa.isJumping = true;    
         } 
-        //ÅĞ¶ÏÕÏ°­Îï×©¿é1 
+        //åˆ¤æ–­éšœç¢ç‰©ç –å—1 
        /*  if (nagisa.x + imgNagisa.getwidth() == brick.x)
                 nagisa.vx = 0;*/
         if (nagisa.x < brick.x + imgBrick_6.getwidth()
@@ -361,11 +361,11 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
             && nagisa.y <brick.y + imgBrick_6.getheight()
             && nagisa.y + imgNagisa.getheight() > brick.y)
         {   
-            // Èç¹ûÌøÔ¾¹ı³ÌÖĞÃ»ÓĞÓë×©¿éÆäËû²¿·ÖÅö×²£¬²¢ÇÒÅöµ½ÁË×©¿é¶¥²¿£¬ÔòÍ£Ö¹ÌøÔ¾²¢Õ¾ÔÚ×©¿éÉÏ  
-            // µ÷ÕûÈËÎïÎ»ÖÃµ½×©¿é¶¥²¿  
+            // å¦‚æœè·³è·ƒè¿‡ç¨‹ä¸­æ²¡æœ‰ä¸ç –å—å…¶ä»–éƒ¨åˆ†ç¢°æ’ï¼Œå¹¶ä¸”ç¢°åˆ°äº†ç –å—é¡¶éƒ¨ï¼Œåˆ™åœæ­¢è·³è·ƒå¹¶ç«™åœ¨ç –å—ä¸Š  
+            // è°ƒæ•´äººç‰©ä½ç½®åˆ°ç –å—é¡¶éƒ¨  
             nagisa.isJumping = false;
             nagisa.vy = 0;
-            nagisa.y = 400;//µÚÒ»¸öÕÏ°­ÎïÅĞ¶Ï£¬»¹ÓĞÆäËûµÄ£¬£¬£¬´ı×ö
+            nagisa.y = 400;//ç¬¬ä¸€ä¸ªéšœç¢ç‰©åˆ¤æ–­ï¼Œè¿˜æœ‰å…¶ä»–çš„ï¼Œï¼Œï¼Œå¾…åš
             if (GetAsyncKeyState('A'))
             {
                nagisa.iframe = nagisa.iframe +1;
@@ -391,10 +391,10 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 }
             }
             if (GetAsyncKeyState('W') && !nagisa.isJumping)
-            { // Èç¹û°´'w'Ã»ÓĞÅö×²ÇÒÈËÎïÃ»ÓĞÌøÔ¾£¬ÔòÈËÎïÏòÉÏÌøÔ¾
+            { // å¦‚æœæŒ‰'w'æ²¡æœ‰ç¢°æ’ä¸”äººç‰©æ²¡æœ‰è·³è·ƒï¼Œåˆ™äººç‰©å‘ä¸Šè·³è·ƒ
                
                 nagisa.iframe = nagisa.iframe +1;
-                nagisa.vy = -10; // ÉèÖÃÌøÔ¾³õËÙ¶È
+                nagisa.vy = -10; // è®¾ç½®è·³è·ƒåˆé€Ÿåº¦
                 nagisa.isJumping = true;
                 if (nagisa.iframe == 5)
                 {
@@ -404,18 +404,18 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
         }
 
 
-        //ÆäËûÕÏ°­ÎïÅĞ¶Ï¡£¡£¡£¡£¡£
-          //ÅĞ¶ÏÕÏ°­Îï×©¿é2
+        //å…¶ä»–éšœç¢ç‰©åˆ¤æ–­ã€‚ã€‚ã€‚ã€‚ã€‚
+          //åˆ¤æ–­éšœç¢ç‰©ç –å—2
         if (nagisa.x < brick_1.x  + imgBrick_2.getwidth()
             && nagisa.x + imgNagisa.getwidth() > brick_1.x 
             && nagisa.y <brick_1.y + imgBrick_2.getheight()
             && nagisa.y + imgNagisa.getheight() > brick_1.y)
         {
-            // Èç¹ûÌøÔ¾¹ı³ÌÖĞÃ»ÓĞÓë×©¿éÆäËû²¿·ÖÅö×²£¬²¢ÇÒÅöµ½ÁË×©¿é¶¥²¿£¬ÔòÍ£Ö¹ÌøÔ¾²¢Õ¾ÔÚ×©¿éÉÏ  
-            // µ÷ÕûÈËÎïÎ»ÖÃµ½×©¿é¶¥²¿  
+            // å¦‚æœè·³è·ƒè¿‡ç¨‹ä¸­æ²¡æœ‰ä¸ç –å—å…¶ä»–éƒ¨åˆ†ç¢°æ’ï¼Œå¹¶ä¸”ç¢°åˆ°äº†ç –å—é¡¶éƒ¨ï¼Œåˆ™åœæ­¢è·³è·ƒå¹¶ç«™åœ¨ç –å—ä¸Š  
+            // è°ƒæ•´äººç‰©ä½ç½®åˆ°ç –å—é¡¶éƒ¨  
             nagisa.isJumping = false;
             nagisa.vy = 0;
-            nagisa.y = 450;//µÚÒ»¸öÕÏ°­ÎïÅĞ¶Ï£¬»¹ÓĞÆäËûµÄ£¬£¬£¬´ı×ö
+            nagisa.y = 450;//ç¬¬ä¸€ä¸ªéšœç¢ç‰©åˆ¤æ–­ï¼Œè¿˜æœ‰å…¶ä»–çš„ï¼Œï¼Œï¼Œå¾…åš
             if (GetAsyncKeyState('A'))
             {
                
@@ -432,9 +432,9 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 nagisa.turn = 1;
             }
             if (GetAsyncKeyState('W') && !nagisa.isJumping)
-            { // Èç¹û°´'w'Ã»ÓĞÅö×²ÇÒÈËÎïÃ»ÓĞÌøÔ¾£¬ÔòÈËÎïÏòÉÏÌøÔ¾
+            { // å¦‚æœæŒ‰'w'æ²¡æœ‰ç¢°æ’ä¸”äººç‰©æ²¡æœ‰è·³è·ƒï¼Œåˆ™äººç‰©å‘ä¸Šè·³è·ƒ
                 nagisa.iframe = +1;
-                nagisa.vy = -15; // ÉèÖÃÌøÔ¾³õËÙ¶È
+                nagisa.vy = -15; // è®¾ç½®è·³è·ƒåˆé€Ÿåº¦
                 nagisa.isJumping = true;
 
             }
@@ -442,18 +442,18 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
 
 
 
-        //ÅĞ¶ÏÕÏ°­Îï×©¿é3
+        //åˆ¤æ–­éšœç¢ç‰©ç –å—3
         if (nagisa.x  < brick_2.x + imgBrick_3.getwidth()
             && nagisa.x + imgNagisa.getwidth() > brick_2.x 
             && nagisa.y <brick_2.y + imgBrick_3.getheight()
             && nagisa.y + imgNagisa.getheight() > brick_2.y)
         {
-            // Èç¹ûÌøÔ¾¹ı³ÌÖĞÃ»ÓĞÓë×©¿éÆäËû²¿·ÖÅö×²£¬²¢ÇÒÅöµ½ÁË×©¿é¶¥²¿£¬ÔòÍ£Ö¹ÌøÔ¾²¢Õ¾ÔÚ×©¿éÉÏ  
-            // µ÷ÕûÈËÎïÎ»ÖÃµ½×©¿é¶¥²¿  
+            // å¦‚æœè·³è·ƒè¿‡ç¨‹ä¸­æ²¡æœ‰ä¸ç –å—å…¶ä»–éƒ¨åˆ†ç¢°æ’ï¼Œå¹¶ä¸”ç¢°åˆ°äº†ç –å—é¡¶éƒ¨ï¼Œåˆ™åœæ­¢è·³è·ƒå¹¶ç«™åœ¨ç –å—ä¸Š  
+            // è°ƒæ•´äººç‰©ä½ç½®åˆ°ç –å—é¡¶éƒ¨  
             nagisa.isJumping = false;
             if (nagisa.y - imgNagisa.getheight() > 300 && nagisa.y - imgNagisa.getheight() < 600)
             {
-                nagisa.vy = +50;//ÈÃÈËÎï²»»á´¥Åöµ½Í·¶¥ÕÏ°­Îï£¬Õı³£ÆÌÔÚµØÃæÉÏµÄÕÏ°­ÎïÇë²Î¿¼ £º//ÅĞ¶ÏÕÏ°­Îï×©¿é2
+                nagisa.vy = +50;//è®©äººç‰©ä¸ä¼šè§¦ç¢°åˆ°å¤´é¡¶éšœç¢ç‰©ï¼Œæ­£å¸¸é“ºåœ¨åœ°é¢ä¸Šçš„éšœç¢ç‰©è¯·å‚è€ƒ ï¼š//åˆ¤æ–­éšœç¢ç‰©ç –å—2
             }
             else
             {
@@ -482,28 +482,28 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 nagisa.turn = 1;
             }
             if (GetAsyncKeyState('W') && !nagisa.isJumping)
-            { // Èç¹û°´'w'Ã»ÓĞÅö×²ÇÒÈËÎïÃ»ÓĞÌøÔ¾£¬ÔòÈËÎïÏòÉÏÌøÔ¾
+            { // å¦‚æœæŒ‰'w'æ²¡æœ‰ç¢°æ’ä¸”äººç‰©æ²¡æœ‰è·³è·ƒï¼Œåˆ™äººç‰©å‘ä¸Šè·³è·ƒ
                
                 nagisa.iframe = +1;
-                nagisa.vy = -10; // ÉèÖÃÌøÔ¾³õËÙ¶È
+                nagisa.vy = -10; // è®¾ç½®è·³è·ƒåˆé€Ÿåº¦
                 nagisa.isJumping = true;
 
             }
         }
 
 
-        //ÅĞ¶ÏÕÏ°­Îï×©¿é4
+        //åˆ¤æ–­éšœç¢ç‰©ç –å—4
         if (nagisa.x  < brick_3.x + imgBrick_6.getwidth()
             && nagisa.x + imgNagisa.getwidth() > brick_3.x
             && nagisa.y <brick_3.y + imgBrick_6.getheight()
             && nagisa.y + imgNagisa.getheight() > brick_3.y)
         {
-            // Èç¹ûÌøÔ¾¹ı³ÌÖĞÃ»ÓĞÓë×©¿éÆäËû²¿·ÖÅö×²£¬²¢ÇÒÅöµ½ÁË×©¿é¶¥²¿£¬ÔòÍ£Ö¹ÌøÔ¾²¢Õ¾ÔÚ×©¿éÉÏ  
-            // µ÷ÕûÈËÎïÎ»ÖÃµ½×©¿é¶¥²¿  
+            // å¦‚æœè·³è·ƒè¿‡ç¨‹ä¸­æ²¡æœ‰ä¸ç –å—å…¶ä»–éƒ¨åˆ†ç¢°æ’ï¼Œå¹¶ä¸”ç¢°åˆ°äº†ç –å—é¡¶éƒ¨ï¼Œåˆ™åœæ­¢è·³è·ƒå¹¶ç«™åœ¨ç –å—ä¸Š  
+            // è°ƒæ•´äººç‰©ä½ç½®åˆ°ç –å—é¡¶éƒ¨  
             nagisa.isJumping = false;
             if (nagisa.y - imgNagisa.getheight() > 300 && nagisa.y - imgNagisa.getheight() < 600)
             {
-                nagisa.vy = +50;//ÈÃÈËÎï²»»á´¥Åöµ½Í·¶¥ÕÏ°­Îï£¬Õı³£ÆÌÔÚµØÃæÉÏµÄÕÏ°­ÎïÇë²Î¿¼ £º//ÅĞ¶ÏÕÏ°­Îï×©¿é2
+                nagisa.vy = +50;//è®©äººç‰©ä¸ä¼šè§¦ç¢°åˆ°å¤´é¡¶éšœç¢ç‰©ï¼Œæ­£å¸¸é“ºåœ¨åœ°é¢ä¸Šçš„éšœç¢ç‰©è¯·å‚è€ƒ ï¼š//åˆ¤æ–­éšœç¢ç‰©ç –å—2
             }
             else
             {
@@ -523,27 +523,27 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 nagisa.turn = 1;
             }
             if (GetAsyncKeyState('W') && !nagisa.isJumping)
-            { // Èç¹û°´'w'Ã»ÓĞÅö×²ÇÒÈËÎïÃ»ÓĞÌøÔ¾£¬ÔòÈËÎïÏòÉÏÌøÔ¾
+            { // å¦‚æœæŒ‰'w'æ²¡æœ‰ç¢°æ’ä¸”äººç‰©æ²¡æœ‰è·³è·ƒï¼Œåˆ™äººç‰©å‘ä¸Šè·³è·ƒ
 
                 nagisa.iframe = +1;
-                nagisa.vy = -10; // ÉèÖÃÌøÔ¾³õËÙ¶È
+                nagisa.vy = -10; // è®¾ç½®è·³è·ƒåˆé€Ÿåº¦
                 nagisa.isJumping = true;
             }
         }
 
 
-        //ÅĞ¶ÏÕÏ°­Îï×©¿é5
+        //åˆ¤æ–­éšœç¢ç‰©ç –å—5
         if (nagisa.x  < brick_4.x + imgBrick_7.getwidth()
             && nagisa.x + imgNagisa.getwidth() > brick_4.x
             && nagisa.y <brick_4.y + imgBrick_7.getheight()
             && nagisa.y + imgNagisa.getheight() > brick_4.y)
         {
-            // Èç¹ûÌøÔ¾¹ı³ÌÖĞÃ»ÓĞÓë×©¿éÆäËû²¿·ÖÅö×²£¬²¢ÇÒÅöµ½ÁË×©¿é¶¥²¿£¬ÔòÍ£Ö¹ÌøÔ¾²¢Õ¾ÔÚ×©¿éÉÏ  
-            // µ÷ÕûÈËÎïÎ»ÖÃµ½×©¿é¶¥²¿  
+            // å¦‚æœè·³è·ƒè¿‡ç¨‹ä¸­æ²¡æœ‰ä¸ç –å—å…¶ä»–éƒ¨åˆ†ç¢°æ’ï¼Œå¹¶ä¸”ç¢°åˆ°äº†ç –å—é¡¶éƒ¨ï¼Œåˆ™åœæ­¢è·³è·ƒå¹¶ç«™åœ¨ç –å—ä¸Š  
+            // è°ƒæ•´äººç‰©ä½ç½®åˆ°ç –å—é¡¶éƒ¨  
             nagisa.isJumping = false;
             if (nagisa.y - imgNagisa.getheight() > 300 && nagisa.y - imgNagisa.getheight() < 600)
             {
-                nagisa.vy = +50;//ÈÃÈËÎï²»»á´¥Åöµ½Í·¶¥ÕÏ°­Îï£¬Õı³£ÆÌÔÚµØÃæÉÏµÄÕÏ°­ÎïÇë²Î¿¼ £º//ÅĞ¶ÏÕÏ°­Îï×©¿é2
+                nagisa.vy = +50;//è®©äººç‰©ä¸ä¼šè§¦ç¢°åˆ°å¤´é¡¶éšœç¢ç‰©ï¼Œæ­£å¸¸é“ºåœ¨åœ°é¢ä¸Šçš„éšœç¢ç‰©è¯·å‚è€ƒ ï¼š//åˆ¤æ–­éšœç¢ç‰©ç –å—2
             }
             else
             {
@@ -563,17 +563,17 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 nagisa.turn = 1;
             }
             if (GetAsyncKeyState('W') && !nagisa.isJumping)
-            { // Èç¹û°´'w'Ã»ÓĞÅö×²ÇÒÈËÎïÃ»ÓĞÌøÔ¾£¬ÔòÈËÎïÏòÉÏÌøÔ¾
+            { // å¦‚æœæŒ‰'w'æ²¡æœ‰ç¢°æ’ä¸”äººç‰©æ²¡æœ‰è·³è·ƒï¼Œåˆ™äººç‰©å‘ä¸Šè·³è·ƒ
 
                 nagisa.iframe = +1;
-                nagisa.vy = -10; // ÉèÖÃÌøÔ¾³õËÙ¶È
+                nagisa.vy = -10; // è®¾ç½®è·³è·ƒåˆé€Ÿåº¦
                 nagisa.isJumping = true;
             }
         }
-            nagisa.y += nagisa.vy; // ¸üĞÂÈËÎïµÄÎ»ÖÃ 
-            nagisa.vy += 1;  // ¼ÓËÙ¶È£¬Ä£ÄâÖØÁ¦  
+            nagisa.y += nagisa.vy; // æ›´æ–°äººç‰©çš„ä½ç½® 
+            nagisa.vy += 1;  // åŠ é€Ÿåº¦ï¼Œæ¨¡æ‹Ÿé‡åŠ›  
         if (GetAsyncKeyState('Z'))
-        {// ·¢Éä×Óµ¯      
+        {// å‘å°„å­å¼¹      
             if (!bullet.active) {
 
                 bullet.active = true;
@@ -582,26 +582,26 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 if (nagisa.y > 545)
                 {
                     nagisa.y = 550;
-                }//ĞŞ¸´×Óµ¯Òì³£ÏÂÂäÎÊÌâ*
+                }//ä¿®å¤å­å¼¹å¼‚å¸¸ä¸‹è½é—®é¢˜*
                 bullet.y = nagisa.y - 50 + imgNagisa.getheight() / 2;
-                bullet.vx = 15; // ×Óµ¯ËÙ¶È    
+                bullet.vx = 15; // å­å¼¹é€Ÿåº¦    
             }
         }
 
-    // ¸üĞÂ×Óµ¯µÄÎ»ÖÃ
+    // æ›´æ–°å­å¼¹çš„ä½ç½®
     if (bullet.active)
     { 
         bullet.x += bullet.vx;
-        // ×Óµ¯³¬³ö±ß½çÔò±ê¼ÇÎªÎ´¼¤»î×´Ì¬
+        // å­å¼¹è¶…å‡ºè¾¹ç•Œåˆ™æ ‡è®°ä¸ºæœªæ¿€æ´»çŠ¶æ€
         if (bullet.x > WindowWidth) {
             bullet.active = false;
         }
     } 
 
-    // ¼ì²â×Óµ¯ÊÇ·ñ»÷ÖĞ´ºÔ°ºÍÍùÈËºÍ×©¿é
+    // æ£€æµ‹å­å¼¹æ˜¯å¦å‡»ä¸­æ˜¥å›­å’Œå¾€äººå’Œç –å—
 
    // if (bullet.active) {
-   //     // Åö×²¼ì²â£º×Óµ¯Óë´ºÔ°ºÍÍùÈËÊÇ·ñÏà½»
+   //     // ç¢°æ’æ£€æµ‹ï¼šå­å¼¹ä¸æ˜¥å›­å’Œå¾€äººæ˜¯å¦ç›¸äº¤
    //     if (bullet.x + imgBullet_yuan.getwidth() >= monster_One.x &&
    //         bullet.x <= monster_One.x + imgMonster_One.getwidth() &&
    //         bullet.y + imgBullet_yuan.getheight() >= monster_One.y &&
@@ -610,9 +610,9 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
    //         bullet.x <= monster_One.x + imgMonster_One.getwidth() &&
    //         bullet.y + imgBullet_zhezhao.getheight() >= monster_One.y &&
    //         bullet.y <= monster_One.y + imgMonster_One.getheight()) {
-   //         // »÷ÖĞ´ºÔ°ºÍÍùÈË£¬ÖØÖÃ×Óµ¯×´Ì¬         
+   //         // å‡»ä¸­æ˜¥å›­å’Œå¾€äººï¼Œé‡ç½®å­å¼¹çŠ¶æ€         
    //         putimage(monster_One.x, monster_One.y, &imgMonster_Oneshouji_zhezhao, SRCAND);
-   //         putimage(monster_One.x, monster_One.y, &imgMonster_Oneshouji, SRCPAINT);//ÊÜµ½¹¥»÷¶¯»­SRCPAINT  
+   //         putimage(monster_One.x, monster_One.y, &imgMonster_Oneshouji, SRCPAINT);//å—åˆ°æ”»å‡»åŠ¨ç”»SRCPAINT  
    //         
    //         mciSendString("play hit", NULL, 0, NULL); 
    //         Sleep(300);
@@ -633,7 +633,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
    //         bullet.active = false;
    //     }
    // }
-   //// ÖØĞÂÉú³É´ºÔ°ºÍÍùÈËÎ»ÖÃ
+   //// é‡æ–°ç”Ÿæˆæ˜¥å›­å’Œå¾€äººä½ç½®
    // if (monster_One.health == 0)
    // {
    //     /*zmciSendString("close hit", NULL, 0, NULL);*/
@@ -652,7 +652,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
    //     monster_Tow.x = WindowWidth + 150;
    //     monster_Tow.health = 150;
    // }
- // ´ºÔ°ºÍÍùÈË³¬³ö±ß½çÔòÖØÖÃÎ»ÖÃ
+ // æ˜¥å›­å’Œå¾€äººè¶…å‡ºè¾¹ç•Œåˆ™é‡ç½®ä½ç½®
     if (monster_One.x < -imgMonster_One.getwidth()|| monster_One.x>890) {
 
         monster_One.turn = 1;
@@ -667,14 +667,14 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
     }
 
 
-  // ¼ì²â´ºÔ°ºÍÍùÈËÊÇ·ñÅöµ½Ç½±Ú  monster_One.x -= 2;monster_Tow.x -= 1;
+  // æ£€æµ‹æ˜¥å›­å’Œå¾€äººæ˜¯å¦ç¢°åˆ°å¢™å£  monster_One.x -= 2;monster_Tow.x -= 1;
     
     if (monster_One.x < brick.x + imgBrick_6.getwidth()
         && monster_One.x + imgMonster_One.getwidth() > brick.x
         && monster_One.y <brick.y + imgBrick_6.getheight()
         && monster_One.y + imgMonster_One.getheight() > brick.y)
     {
-        monster_One.turn = -1;//´ºÔ°ºÍÍùÈËºÍ×©¿éÅö×²¼ì²â£¬Èç¹ûÅöµ½ÁËÕÏ°­Îï¾Í¸Ä±ä·½Ïò
+        monster_One.turn = -1;//æ˜¥å›­å’Œå¾€äººå’Œç –å—ç¢°æ’æ£€æµ‹ï¼Œå¦‚æœç¢°åˆ°äº†éšœç¢ç‰©å°±æ”¹å˜æ–¹å‘
     }
 
     if (monster_Tow.x < brick.x + imgBrick_6.getwidth()
@@ -682,13 +682,13 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
         && monster_Tow.y <brick.y + imgBrick_6.getheight()
         && monster_Tow.y + imgMonster_Tow.getheight() > brick.y)
     {
-        monster_Tow.turn = -1;//´ºÔ°ºÍÍùÈËºÍ×©¿éÅö×²¼ì²â£¬Èç¹ûÅöµ½ÁËÕÏ°­Îï¾Í¸Ä±ä·½Ïò
+        monster_Tow.turn = -1;//æ˜¥å›­å’Œå¾€äººå’Œç –å—ç¢°æ’æ£€æµ‹ï¼Œå¦‚æœç¢°åˆ°äº†éšœç¢ç‰©å°±æ”¹å˜æ–¹å‘
     }
-    // ¸üĞÂ´ºÔ°ºÍÍùÈËµÄÎ»ÖÃ£¬Åöµ½×©¿éºó×ªÏò
+    // æ›´æ–°æ˜¥å›­å’Œå¾€äººçš„ä½ç½®ï¼Œç¢°åˆ°ç –å—åè½¬å‘
     if (monster_One.turn == 1)
     {
         putimage(monster_One.x, monster_One.y, &imgMonster_One, SRCAND);
-        monster_One.x -= 2; // ´ºÔ°ºÍÍùÈËºáÏòÒÆ¶¯ËÙ¶È
+        monster_One.x -= 2; // æ˜¥å›­å’Œå¾€äººæ¨ªå‘ç§»åŠ¨é€Ÿåº¦
     }
     else
     {
@@ -708,7 +708,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
     }
 
   
-        // Èç¹û³¬³ö´°¿Úµ×²¿£¬ÖØÖÃµ½µØÃæÉÏ
+        // å¦‚æœè¶…å‡ºçª—å£åº•éƒ¨ï¼Œé‡ç½®åˆ°åœ°é¢ä¸Š
         if (nagisa.y >= WindowHeight - GroundHeight - imgNagisa.getheight()) {
             nagisa.y = WindowHeight - GroundHeight - imgNagisa.getheight();
             nagisa.isJumping = false;
@@ -716,7 +716,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
         
     }    
     
-// ÓÎÏ·Ñ­»· 
+// æ¸¸æˆå¾ªç¯ 
     void gameLoop() {
             score = 0;
             Nagisa nagisa;
@@ -740,12 +740,12 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
             monster_Tow.health = 150;
             monster_One.x = WindowWidth + 30;
             monster_One.y = WindowHeight - GroundHeight - imgMonster_One.getheight();
-            monster_One.vx = 2; // ´ºÔ°ºÍÍùÈËºáÏòËÙ¶È
+            monster_One.vx = 2; // æ˜¥å›­å’Œå¾€äººæ¨ªå‘é€Ÿåº¦
             monster_Tow.x = WindowWidth + 180;
             monster_Tow.y = WindowHeight - GroundHeight - imgMonster_Tow.getheight();
             monster_Tow.vx = 2;
             gameState = PLAYING;
-            int time ;//ÔİÍ£Ê±¼ä±äÁ¿eg:Sleep(time)
+            int time ;//æš‚åœæ—¶é—´å˜é‡eg:Sleep(time)
             int overtime ;
             
             while (true) {
@@ -754,26 +754,26 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 case PLAYING:
 
 
-                    //´ò¿ªÒôÀÖ£¬²¥·ÅÒôÀÖ  alias È¡±ğÃû repeat ÖØ¸´²¥·Å
+                    //æ‰“å¼€éŸ³ä¹ï¼Œæ’­æ”¾éŸ³ä¹  alias å–åˆ«å repeat é‡å¤æ’­æ”¾
                    mciSendString("play BGM_PLAYING ", NULL, 0, NULL); 
                    mciSendString("play BGM_PLAYING repeat", NULL, 0, NULL);         
-                    drawBackground();   // »æÖÆ±³¾°
-                    drawGround();       // »æÖÆµØÃæ
-                    drawBricks();       // »æÖÆ×©¿é
-                    drawNagisa(nagisa);   // »æÖÆÈËÎï
-                    drawMonster(monster_One, monster_Tow); // »æÖÆ´ºÔ°ºÍÍùÈË
-                    drawBullet(bullet); // »æÖÆ×Óµ¯ 
-                    settextstyle(30, 0, ("ËÎÌå"));
-                    outtextxy(30, 30, ("µ±Ç°µÃ·Ö£º"));
+                    drawBackground();   // ç»˜åˆ¶èƒŒæ™¯
+                    drawGround();       // ç»˜åˆ¶åœ°é¢
+                    drawBricks();       // ç»˜åˆ¶ç –å—
+                    drawNagisa(nagisa);   // ç»˜åˆ¶äººç‰©
+                    drawMonster(monster_One, monster_Tow); // ç»˜åˆ¶æ˜¥å›­å’Œå¾€äºº
+                    drawBullet(bullet); // ç»˜åˆ¶å­å¼¹ 
+                    settextstyle(30, 0, ("å®‹ä½“"));
+                    outtextxy(30, 30, ("å½“å‰å¾—åˆ†ï¼š"));
                     itoa(score, scoreStr, 10);
-                    // Ê¹ÓÃitoa½«ÕûÊı×ª»»Îª×Ö·û´®   
-                    // µÚÒ»¸ö²ÎÊıÊÇÒª×ª»»µÄÕûÊı£¬µÚ¶ş¸ö²ÎÊıÊÇ×ª»»ºóµÄ×Ö·û´®µÄ»ùÊı£¨10±íÊ¾Ê®½øÖÆ£©  
+                    // ä½¿ç”¨itoaå°†æ•´æ•°è½¬æ¢ä¸ºå­—ç¬¦ä¸²   
+                    // ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯è¦è½¬æ¢çš„æ•´æ•°ï¼Œç¬¬äºŒä¸ªå‚æ•°æ˜¯è½¬æ¢åçš„å­—ç¬¦ä¸²çš„åŸºæ•°ï¼ˆ10è¡¨ç¤ºåè¿›åˆ¶ï¼‰  
                     outtextxy(180, 30, scoreStr);                   
 
- // ¸üĞÂÓÎÏ·×´Ì¬2024.7.18,,Ã÷Ìì¼ÌĞø
+ // æ›´æ–°æ¸¸æˆçŠ¶æ€2024.7.18,,æ˜å¤©ç»§ç»­
                     updateGame(nagisa, bullet, monster_One, monster_Tow);
                     if (bullet.active) {
-                        // Åö×²¼ì²â£º×Óµ¯Óë´ºÔ°ºÍÍùÈËÊÇ·ñÏà½»
+                        // ç¢°æ’æ£€æµ‹ï¼šå­å¼¹ä¸æ˜¥å›­å’Œå¾€äººæ˜¯å¦ç›¸äº¤
                         if (bullet.x + imgBullet_yuan.getwidth() >= monster_One.x &&
                             bullet.x <= monster_One.x + imgMonster_One.getwidth() &&
                             bullet.y + imgBullet_yuan.getheight() >= monster_One.y &&
@@ -782,15 +782,16 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                             bullet.x <= monster_One.x + imgMonster_One.getwidth() &&
                             bullet.y + imgBullet_zhezhao.getheight() >= monster_One.y &&
                             bullet.y <= monster_One.y + imgMonster_One.getheight()) {                
-                            // »÷ÖĞ´ºÔ°ºÍÍùÈË£¬ÖØÖÃ×Óµ¯×´Ì¬
+                            // å‡»ä¸­æ˜¥å›­å’Œå¾€äººï¼Œé‡ç½®å­å¼¹çŠ¶æ€
                             if(monster_One.health == 100)
                             { 
-                            PlaySound(_T("×Óµ¯´òµ½µĞÈË.wav"), NULL, SND_FILENAME | SND_ASYNC);//Ê¹ÓÃEasyX Í¼ĞÎ¿âÊ±£¬PlaySoundº¯Êı¿ÉÒÔÓÃÀ´ÔÚÍ¼ĞÎ½çÃæ³ÌĞòÖĞ²¥·ÅÉùÒô
-                            //³£ÓÃµÄ±êÖ¾°üÀ¨ SND_FILENAME£¨pszSound ÊÇÒ»¸öÎÄ¼şÃû£©¡¢SND_RESOURCE£¨pszSound ÊÇÒ»¸ö×ÊÔ´Ãû£©¡¢SND_ASYNC£¨Òì²½²¥·ÅÉùÒô£¬¼´º¯ÊıÁ¢¼´·µ»Ø£©
-                            // SND_SYNC£¨Í¬²½²¥·ÅÉùÒô£¬¼´µÈ´ıÉùÒô²¥·ÅÍê³Éºóº¯Êı²Å·µ»Ø£©ºÍ SND_LOOP£¨Ñ­»·²¥·ÅÉùÒô£©¡£
+                            PlaySound(_T("å­å¼¹æ‰“åˆ°æ•Œäºº.wav"), NULL, SND_FILENAME | SND_ASYNC);//ä½¿ç”¨EasyX å›¾å½¢åº“æ—¶ï¼ŒPlaySoundå‡½æ•°å¯ä»¥ç”¨æ¥åœ¨å›¾å½¢ç•Œé¢ç¨‹åºä¸­æ’­æ”¾å£°éŸ³
+                            //å¸¸ç”¨çš„æ ‡å¿—åŒ…æ‹¬ SND_FILENAMEï¼ˆpszSound æ˜¯ä¸€ä¸ªæ–‡ä»¶åï¼‰ã€SND_RESOURCEï¼ˆpszSound æ˜¯ä¸€ä¸ªèµ„æºåï¼‰ã€SND_ASYNCï¼ˆå¼‚æ­¥æ’­æ”¾å£°éŸ³ï¼Œå³å‡½æ•°ç«‹å³è¿”å›ï¼‰
+                            // SND_SYNCï¼ˆåŒæ­¥æ’­æ”¾å£°éŸ³ï¼Œå³ç­‰å¾…å£°éŸ³æ’­æ”¾å®Œæˆåå‡½æ•°æ‰è¿”å›ï¼‰å’Œ SND_LOOPï¼ˆå¾ªç¯æ’­æ”¾å£°éŸ³ï¼‰ã€‚
                             }
                             putimage(monster_One.x, monster_One.y, &imgMonster_Oneshouji_zhezhao, SRCAND);
-                            putimage(monster_One.x, monster_One.y, &imgMonster_Oneshouji, SRCPAINT);//ÊÜµ½¹¥»÷¶¯»­SRCPAINT  
+                            putimage(monster_One.x, monster_One.y, &imgMonster_Oneshouji, SRCPAINT);//å—åˆ°æ”»å‡»åŠ¨ç”»SRCPAINT  
+                            monster_One.vx=0;
                             Sleep(200);
                             
                             monster_One.health = monster_One.health - 50;
@@ -810,10 +811,10 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                             bullet.active = false;
                         }                  
                     }
-                    // ÖØĞÂÉú³É´ºÔ°ºÍÍùÈËÎ»ÖÃ
+                    // é‡æ–°ç”Ÿæˆæ˜¥å›­å’Œå¾€äººä½ç½®
                     if (monster_One.health == 0)
                     {
-                        PlaySound(_T("µĞÈËµ¹ÏÂ.wav"), NULL, SND_FILENAME | SND_ASYNC);
+                        PlaySound(_T("æ•Œäººå€’ä¸‹.wav"), NULL, SND_FILENAME | SND_ASYNC);
                         score += 20;
                         monster_One.turn = 1;
                         monster_One.x = WindowWidth + 180;
@@ -825,7 +826,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                         monster_Tow.health = 150;
                     }
                      
-                    // Åö×²¼ì²â£ºÈËÎïÓë´ºÔ°ºÍÍùÈËÊÇ·ñÏà½»
+                    // ç¢°æ’æ£€æµ‹ï¼šäººç‰©ä¸æ˜¥å›­å’Œå¾€äººæ˜¯å¦ç›¸äº¤
                     if ((nagisa.x + imgNagisa.getwidth() >= monster_One.x &&
                         nagisa.x <= monster_One.x + imgMonster_One.getwidth() &&
                         nagisa.y + imgNagisa.getheight() >= monster_One.y &&
@@ -863,7 +864,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                         gameState = GAME_OVER;
                    }
 
-                    //×Óµ¯¶¯»­·ÅÔÚupdateGameºóÃæ7.19ÈÕÍê³É
+                    //å­å¼¹åŠ¨ç”»æ”¾åœ¨updateGameåé¢7.19æ—¥å®Œæˆ
                     if (bullet.active)
                     {
                         bullet.iframe = bullet.iframe + 1;
@@ -873,13 +874,13 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                         {
                         case 1:
                             putimage(bullet.x, bullet.y, &imgHaiXing_Animation_zhezhao1, SRCAND); 
-                            //Ìí¼ÓÎ»ÔËËãºêºê£º ¡° SRCAND ¡± ×öÓëÔËËã£¬Ïû³ı°×É«²¿·Ö
+                            //æ·»åŠ ä½è¿ç®—å®å®ï¼š â€œ SRCAND â€ åšä¸è¿ç®—ï¼Œæ¶ˆé™¤ç™½è‰²éƒ¨åˆ†
                             putimage(bullet.x, bullet.y, &imgHaiXing_Animation_yuan1, SRCPAINT);  
-                            //ºê£º ¡°SRCPAINT¡± ×ö»òÔËËã£¬Ïû³ıºÚ±ß                   
+                            //å®ï¼š â€œSRCPAINTâ€ åšæˆ–è¿ç®—ï¼Œæ¶ˆé™¤é»‘è¾¹                   
                                                                                                   
-                            //ÏÈ¶ÔÕÚÕÖ²ã×öÓëÔËËã±£ÁôºÚº£ĞÇÖ÷Ìå£¬ÔÙ¶ÔÔ­Í¼×ö»òÔËËã£¬±£ÁôÔ­Í¼º£ĞÇÖ÷Ìåµş¼ÓÉÏ×öÁËÓëÔËËãµÄÕÚÕÖ²ã
+                            //å…ˆå¯¹é®ç½©å±‚åšä¸è¿ç®—ä¿ç•™é»‘æµ·æ˜Ÿä¸»ä½“ï¼Œå†å¯¹åŸå›¾åšæˆ–è¿ç®—ï¼Œä¿ç•™åŸå›¾æµ·æ˜Ÿä¸»ä½“å åŠ ä¸Šåšäº†ä¸è¿ç®—çš„é®ç½©å±‚
                                                                                                  
-                            //ÏêÇé¼û"https://blog.csdn.net/m0_60777643/article/details/122833558"     
+                            //è¯¦æƒ…è§"https://blog.csdn.net/m0_60777643/article/details/122833558"     
                             break;
                         case 2:
                             putimage(bullet.x, bullet.y, &imgHaiXing_Animation_zhezhao2, SRCAND);
@@ -906,16 +907,16 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                             bullet.iframe = 1;
                         }
                     }
-                    //Ë³´øÒ»Ìá£¬Õâ¸öµØ·½×¼±¸×öÈËÎïÏòÓÒµÄ¶¯×÷µÄ£¬µ«ÊÇ²»ÖªµÀÎªÊ²Ã´»á³öÏÖÉÁÆÁ£¬ÒÔºóÔÙËµ £¬ÒÑ½â¾ö£¬¶à·ÅÕÅÍ¼Æ¬¼´¿É
+                    //é¡ºå¸¦ä¸€æï¼Œè¿™ä¸ªåœ°æ–¹å‡†å¤‡åšäººç‰©å‘å³çš„åŠ¨ä½œçš„ï¼Œä½†æ˜¯ä¸çŸ¥é“ä¸ºä»€ä¹ˆä¼šå‡ºç°é—ªå±ï¼Œä»¥åå†è¯´ ï¼Œå·²è§£å†³ï¼Œå¤šæ”¾å¼ å›¾ç‰‡å³å¯
                 
-            if (nagisa.turn == -1)//ÈËÎïÏò×ó
+            if (nagisa.turn == -1)//äººç‰©å‘å·¦
             {
                 
                 switch ((int)nagisa.iframe)
                 {
                 case 1:
 
-                    /* putimage(, &img_ayuyi_left1, SRCAND);*///ºÚÉ«·´×ªÍ¼Ìí¼ÓÎ»ÔËËãºêºê£º ¡° SRCAND ¡± ×öÓëÔËËã ºê£º ¡°SRCPAINT¡± ×ö»òÔËËã
+                    /* putimage(, &img_ayuyi_left1, SRCAND);*///é»‘è‰²åè½¬å›¾æ·»åŠ ä½è¿ç®—å®å®ï¼š â€œ SRCAND â€ åšä¸è¿ç®— å®ï¼š â€œSRCPAINTâ€ åšæˆ–è¿ç®—
                    putimage(nagisa.x-5, nagisa.y,&img_ayuyi_left1_zhezhao, SRCAND);
                    putimage(nagisa.x-5, nagisa.y, &img_ayuyi_left1, SRCPAINT);
                     break;
@@ -947,14 +948,14 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                     nagisa.iframe = 1;
                 }
             }
-            // ¼ì²éÓÎÏ·½áÊøÌõ¼ş
+            // æ£€æŸ¥æ¸¸æˆç»“æŸæ¡ä»¶
             switch (currentLevel) {
             case Level::Level1_1:
-                // ÔÚ1-1¹Ø¿¨ÖĞ£¬Èç¹ûÈËÎï´ïµ½Ò»¶¨Î»ÖÃ£¬ÇĞ»»µ½1-2¹Ø¿¨
+                // åœ¨1-1å…³å¡ä¸­ï¼Œå¦‚æœäººç‰©è¾¾åˆ°ä¸€å®šä½ç½®ï¼Œåˆ‡æ¢åˆ°1-2å…³å¡
                 if (nagisa.x > 780) {
                     currentLevel = Level::Level1_2; \
                         score += 100;
-                    nagisa.x = 10; // ÇĞ»»¹Ø¿¨ºó£¬ÖØĞÂÉèÖÃÈËÎïÎ»ÖÃ
+                    nagisa.x = 10; // åˆ‡æ¢å…³å¡åï¼Œé‡æ–°è®¾ç½®äººç‰©ä½ç½®
                     nagisa.y = WindowHeight - GroundHeight - imgNagisa.getheight();
 
                     monster_One.x = WindowWidth + 50;
@@ -962,28 +963,28 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 }
                 break;
             case Level::Level1_2:
-                // ÔÚ1-2¹Ø¿¨ÖĞ£¬Èç¹ûÈËÎï´ïµ½Ò»¶¨Î»ÖÃ£¬ÇĞ»»µ½1-3¹Ø¿¨
+                // åœ¨1-2å…³å¡ä¸­ï¼Œå¦‚æœäººç‰©è¾¾åˆ°ä¸€å®šä½ç½®ï¼Œåˆ‡æ¢åˆ°1-3å…³å¡
                 if (nagisa.x > 780) {
                     currentLevel = Level::Level1_3;
                     score += 150;
-                    nagisa.x = 10; // ÇĞ»»¹Ø¿¨ºó£¬ÖØĞÂÉèÖÃÈËÎïÎ»ÖÃ
+                    nagisa.x = 10; // åˆ‡æ¢å…³å¡åï¼Œé‡æ–°è®¾ç½®äººç‰©ä½ç½®
                     nagisa.y = WindowHeight - GroundHeight - imgNagisa.getheight();
                     monster_One.x = WindowWidth + 20;
                     monster_Tow.x = WindowWidth + 180;
                 }
-                if (nagisa.x < -50) {//ÔÚ1-2¹Ø¿¨ÖĞ£¬Èç¹ûÈËÎï´ïµ½[Ò»¶¨Î»ÖÃÆÁÄ»×î×ó±ß£¬ÇĞ»»µ½1-1¹Ø¿¨
+                if (nagisa.x < -50) {//åœ¨1-2å…³å¡ä¸­ï¼Œå¦‚æœäººç‰©è¾¾åˆ°[ä¸€å®šä½ç½®å±å¹•æœ€å·¦è¾¹ï¼Œåˆ‡æ¢åˆ°1-1å…³å¡
                     currentLevel = Level::Level1_1;
-                    nagisa.x = 790; // ÇĞ»»¹Ø¿¨ºó£¬ÖØĞÂÉèÖÃÈËÎïÎ»ÖÃ
+                    nagisa.x = 790; // åˆ‡æ¢å…³å¡åï¼Œé‡æ–°è®¾ç½®äººç‰©ä½ç½®
                     nagisa.y = WindowHeight - GroundHeight - imgNagisa.getheight();
                     monster_One.x = WindowWidth + 40;
                     monster_Tow.x = WindowWidth + 180;
                 }
                 break;
             case Level::Level1_3:
-                // ÔÚ1-3¹Ø¿¨ÖĞ£¬Èç¹ûÈËÎï´ïµ½Ò»¶¨Î»ÖÃ£¬ÓÎÏ·½áÊø
-                if (nagisa.x < -50) {//ÔÚ1-2¹Ø¿¨ÖĞ£¬Èç¹ûÈËÎï´ïµ½[Ò»¶¨Î»ÖÃÆÁÄ»×î×ó±ß£¬ÇĞ»»µ½1-1¹Ø¿¨
+                // åœ¨1-3å…³å¡ä¸­ï¼Œå¦‚æœäººç‰©è¾¾åˆ°ä¸€å®šä½ç½®ï¼Œæ¸¸æˆç»“æŸ
+                if (nagisa.x < -50) {//åœ¨1-2å…³å¡ä¸­ï¼Œå¦‚æœäººç‰©è¾¾åˆ°[ä¸€å®šä½ç½®å±å¹•æœ€å·¦è¾¹ï¼Œåˆ‡æ¢åˆ°1-1å…³å¡
                     currentLevel = Level::Level1_2;
-                    nagisa.x = 790; // ÇĞ»»¹Ø¿¨ºó£¬ÖØĞÂÉèÖÃÈËÎïÎ»ÖÃ
+                    nagisa.x = 790; // åˆ‡æ¢å…³å¡åï¼Œé‡æ–°è®¾ç½®äººç‰©ä½ç½®
                     nagisa.y = WindowHeight - GroundHeight - imgNagisa.getheight();
                     monster_One.x = WindowWidth + 30;
                     monster_Tow.x = WindowWidth + 180;
@@ -991,44 +992,44 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 if (nagisa.x > 800) {
                     currentLevel = Level::GameOver;
                     score += 200;
-                    cleardevice(); // Çå¿ÕÆÁÄ»
-                    PlaySound(_T("Ê¤ÀûÒôÀÖ.wav"), NULL, SND_FILENAME | SND_ASYNC);
+                    cleardevice(); // æ¸…ç©ºå±å¹•
+                    PlaySound(_T("èƒœåˆ©éŸ³ä¹.wav"), NULL, SND_FILENAME | SND_ASYNC);
                     mciSendString("close BGM_PLAYING", NULL, 0, NULL);
                     mciSendString("play BGM_GAMEOVER", NULL, 0, NULL); 
                     mciSendString("play BGM_GAMEOVER repeat", NULL, 0, NULL);
 
                     putimage(0, 0, &gamewin_background);
                     settextcolor(BLACK);   
-                    settextstyle(20, 0, ("ËÎÌå"));
-                    outtextxy(500, 150, ("³É¹¦±£ÎÀÁË¹ÅºÓÃæ°üµê£¡")); // ÏÔÊ¾ÓÎÏ·½áÊøĞÅÏ¢
-                    outtextxy(500, 180, ("×Ü¼ÆµÃ·Ö£º"));
+                    settextstyle(20, 0, ("å®‹ä½“"));
+                    outtextxy(500, 150, ("æˆåŠŸä¿å«äº†å¤æ²³é¢åŒ…åº—ï¼")); // æ˜¾ç¤ºæ¸¸æˆç»“æŸä¿¡æ¯
+                    outtextxy(500, 180, ("æ€»è®¡å¾—åˆ†ï¼š"));
                     itoa(score, scoreStr, 10);
                     outtextxy(600, 180, scoreStr);
-                    outtextxy(500, 210, ("°´ÈÎÒâ¼ü¼´¿É·µ»ØÖ÷²Ëµ¥"));
+                    outtextxy(500, 210, ("æŒ‰ä»»æ„é”®å³å¯è¿”å›ä¸»èœå•"));
                     overtime = 50000;
-                    if (_getch())//¼ì²éµ±Ç°ÊÇ·ñÓĞ¼üÅÌÊäÈë
+                    if (_getch())//æ£€æŸ¥å½“å‰æ˜¯å¦æœ‰é”®ç›˜è¾“å…¥
                     {     
                         overtime = 0;
                     }
                     Sleep(overtime);
                     mciSendString("close BGM_GAMEOVER", NULL, 0, NULL);
-                    //ÎŞ²Ù×÷3Ãëºó×Ô¶¯·µ»ØÖ÷²Ëµ¥
+                    //æ— æ“ä½œ3ç§’åè‡ªåŠ¨è¿”å›ä¸»èœå•
                     gameState = MAIN_MENU;
                 }
                 break;
             default:
                 break;
             }     
-            FlushBatchDraw();   // Ë¢ĞÂÆÁÄ»
-            Sleep(30); // ¿ØÖÆÖ¡ÂÊ
-                   //if(GetAsyncKeyState('L'))// ESC¼üÎªÔİÍ£  ********ÔİÍ£ÓĞµãÎÊÌâ**************** 2024.7 18ĞŞ¸´
+            FlushBatchDraw();   // åˆ·æ–°å±å¹•
+            Sleep(30); // æ§åˆ¶å¸§ç‡
+                   //if(GetAsyncKeyState('L'))// ESCé”®ä¸ºæš‚åœ  ********æš‚åœæœ‰ç‚¹é—®é¢˜**************** 2024.7 18ä¿®å¤
                     
-                if (_kbhit())//¼ì²éµ±Ç°ÊÇ·ñÓĞ¼üÅÌÊäÈë
+                if (_kbhit())//æ£€æŸ¥å½“å‰æ˜¯å¦æœ‰é”®ç›˜è¾“å…¥
                 {
 
-                    int ch = _getch(); //ÕâÀïµÈ´ıÊäÈë£¬Æğµ½ÔİÍ£³ÌĞòµÄ×÷ÓÃ
+                    int ch = _getch(); //è¿™é‡Œç­‰å¾…è¾“å…¥ï¼Œèµ·åˆ°æš‚åœç¨‹åºçš„ä½œç”¨
                    
-                    if (/*ch == 'q'||ch=='Q' ||*/GetAsyncKeyState(VK_ESCAPE))//q¡¢Q¡¢Esc¼üÔİÍ£
+                    if (/*ch == 'q'||ch=='Q' ||*/GetAsyncKeyState(VK_ESCAPE))//qã€Qã€Escé”®æš‚åœ
                     {
                         pause_count = 1;
                         BeginBatchDraw();
@@ -1036,14 +1037,14 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                         settextcolor(LIGHTRED);
                         setlinecolor(BLACK);
                
-                        fillroundrect(x_size / 2 - 65, Y_size / 3, x_size / 2 + 55, Y_size / 3 + 30, 10, 10);//Ô²½Ç¾ØĞÎ£¬ºóÃæÁ½²ÎÊı10,10ÊÇµ÷½ÚÔ²½Ç³Ì¶È
+                        fillroundrect(x_size / 2 - 65, Y_size / 3, x_size / 2 + 55, Y_size / 3 + 30, 10, 10);//åœ†è§’çŸ©å½¢ï¼Œåé¢ä¸¤å‚æ•°10,10æ˜¯è°ƒèŠ‚åœ†è§’ç¨‹åº¦
                         settextcolor(BROWN);
-                        setfont(30, 0, "ËÎÌå");
-                        outtextxy(x_size / 2 - 65, Y_size / 3, "¼ÌĞøÓÎÏ·");
+                        setfont(30, 0, "å®‹ä½“");
+                        outtextxy(x_size / 2 - 65, Y_size / 3, "ç»§ç»­æ¸¸æˆ");
                         fillroundrect(x_size / 2 - 65, Y_size / 3 + 30, x_size / 2 + 55, Y_size / 3 + 60, 10, 10);
-                        outtextxy(x_size / 2 - 65, Y_size / 3 + 30, " Ö÷²Ëµ¥ ");
+                        outtextxy(x_size / 2 - 65, Y_size / 3 + 30, " ä¸»èœå• ");
                         fillroundrect(x_size / 2 - 65, Y_size / 3 + 60, x_size / 2 + 55, Y_size / 3 + 90, 10, 10);
-                        outtextxy(x_size / 2 - 65, Y_size / 3 + 60, "ÍË³öÓÎÏ·");
+                        outtextxy(x_size / 2 - 65, Y_size / 3 + 60, "é€€å‡ºæ¸¸æˆ");
                         EndBatchDraw();
                     }
                         ExMessage msg;
@@ -1051,7 +1052,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                         {
 
 
-                            if (peekmessage(&msg, EM_MOUSE)&&msg.message == WM_LBUTTONDOWN)//Èç¹ûµã»÷µÄÊó±êÏûÏ¢ÎªÊó±ê×ó¼ü
+                            if (peekmessage(&msg, EM_MOUSE)&&msg.message == WM_LBUTTONDOWN)//å¦‚æœç‚¹å‡»çš„é¼ æ ‡æ¶ˆæ¯ä¸ºé¼ æ ‡å·¦é”®
                             {
 
  
@@ -1093,24 +1094,24 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
                 case GAME_OVER:
 
                     mciSendString("close BGM_PLAYING", NULL, 0, NULL);          
-                            //´ò¿ªÒôÀÖ£¬²¥·ÅÒôÀÖ  alias È¡±ğÃû repeat ÖØ¸´²¥·Å
+                            //æ‰“å¼€éŸ³ä¹ï¼Œæ’­æ”¾éŸ³ä¹  alias å–åˆ«å repeat é‡å¤æ’­æ”¾
                             mciSendString("play BGM_GAMEOVER", NULL, 0, NULL);
                             mciSendString("play BGM_GAMEOVER repeat", NULL, 0, NULL);                           
                            /*currentLevel = Level::GameOver;*/
-                           cleardevice(); // Çå¿ÕÆÁÄ»
+                           cleardevice(); // æ¸…ç©ºå±å¹•
                            putimage(0, 0, &gameover_background);
                            settextcolor(RED);
-                           settextstyle(30, 0, ("ËÎÌå"));
-                           outtextxy(100, 50, ("ÓÎÏ·½áÊø£¡")); // ÏÔÊ¾ÓÎÏ·½áÊøĞÅÏ¢
-                           outtextxy(120, 80, ("°´ÈÎÒâ¼ü¼´¿É·µ»ØÖ÷²Ëµ¥"));
-                           outtextxy(120, 110, ("ÎŞ²Ù×÷60Ãëºó×Ô¶¯·µ»ØÖ÷²Ëµ¥"));
+                           settextstyle(30, 0, ("å®‹ä½“"));
+                           outtextxy(100, 50, ("æ¸¸æˆç»“æŸï¼")); // æ˜¾ç¤ºæ¸¸æˆç»“æŸä¿¡æ¯
+                           outtextxy(120, 80, ("æŒ‰ä»»æ„é”®å³å¯è¿”å›ä¸»èœå•"));
+                           outtextxy(120, 110, ("æ— æ“ä½œ60ç§’åè‡ªåŠ¨è¿”å›ä¸»èœå•"));
                             time = 60000;                     
-                            if (_getch())//¼ì²éµ±Ç°ÊÇ·ñÓĞ¼üÅÌÊäÈë
+                            if (_getch())//æ£€æŸ¥å½“å‰æ˜¯å¦æœ‰é”®ç›˜è¾“å…¥
                             {
                                 time = 0;
-                                //_getch();//¼ì²éµ±Ç°ÊÇ·ñÓĞ¼üÅÌÊäÈë 
+                                //_getch();//æ£€æŸ¥å½“å‰æ˜¯å¦æœ‰é”®ç›˜è¾“å…¥ 
                             }
-                            Sleep(time);//ÎŞ²Ù×÷ºó×Ô¶¯·µ»ØÖ÷²Ëµ¥
+                            Sleep(time);//æ— æ“ä½œåè‡ªåŠ¨è¿”å›ä¸»èœå•
                            mciSendString("close BGM_GAMEOVER", NULL, 0, NULL);
                            gameState = MAIN_MENU;
                            
@@ -1131,7 +1132,7 @@ void updateGame(Nagisa& nagisa, Bullet& bullet, Monster& monster_One, Monster& m
             }                     
     }
  
-// Ö÷º¯Êı 
+// ä¸»å‡½æ•° 
 void main()
 {
    
@@ -1139,7 +1140,7 @@ void main()
         game g;
         g.start();
         show_animation(nagisa);
-        gameLoop(); // ÓÎÏ·Ñ­»·
+        gameLoop(); // æ¸¸æˆå¾ªç¯
 
 }
 
