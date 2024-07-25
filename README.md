@@ -20,6 +20,11 @@ EaxyX的入门教学推荐这个视频https://www.bilibili.com/video/BV11p4y1i74
 
 ![gamewinbackground](https://github.com/user-attachments/assets/b7ab55c8-7dae-4cb7-8de3-9fc3099880e4)
 
+如果要生成解决方案的话，记得把exe文件放在对应目录下，运行后才会加载相关的图片资源，不然就是一团黑
+
+![介绍](https://github.com/user-attachments/assets/b7975bee-24ee-4df8-9adf-37957578cdc2)
+
+
 以下为局内效果
 
 图片说明-主页面
