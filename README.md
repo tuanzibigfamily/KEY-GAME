@@ -5,13 +5,18 @@
 
 2024.7.24日完成，小游戏只是为爱发电做的，还有许多需要完善的地方，欢迎登录github参与建设，项目地址为：https://github.com/tuanzibigfamily/KEY-GAME
 
-在Visual Studio 2022（10+)版本上可正常运行，记得去项目-属性内选择多字节符，还有easyx图形库的使用，
-入门教学推荐这个视频https://www.bilibili.com/video/BV11p4y1i74A
 爱的力量，是无限的.jpg
 
-该有的注释我基本上都打上了，在text里面的两个.cpp文件内供参考。
+全部代码文件在Visual Studio 2022（10+)版本上可正常运行，记得去项目-属性内选择多字节符，还有easyx图形库的使用。
+EaxyX的入门教学推荐这个视频https://www.bilibili.com/video/BV11p4y1i74A
 
-如果后来的友友想参加，请创建自己的文件夹分支，方法见https://blog.csdn.net/Fly_1213/article/details/89294549这个指导喵~o( =∩ω∩= )m
+这个老师讲的很有意思
+
+代码内需要注意的地方该有的注释我基本上都打上了，在text里面的两个.cpp文件内供参考。
+
+如果后来的友友想参加，请创建自己的分支，有的友友有如何在页面中添加文件夹的需求，一种是本地仓库直接上传，另一种是直接在Web端建立文件夹，此方法见https://blog.csdn.net/Fly_1213/article/details/89294549
+
+这个指导喵~o( =∩ω∩= )m
 
 ![gamewinbackground](https://github.com/user-attachments/assets/b7ab55c8-7dae-4cb7-8de3-9fc3099880e4)
 
