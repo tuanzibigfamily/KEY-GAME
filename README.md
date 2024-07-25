@@ -11,9 +11,9 @@
 
 该有的注释我基本上都打上了，在text里面的两个.cpp文件内供参考。
 
-如果后来的友友想参加，请创建自己的文件夹分支，方法见https://blog.csdn.net/Fly_1213/article/details/89294549
+如果后来的友友想参加，请创建自己的文件夹分支，方法见https://blog.csdn.net/Fly_1213/article/details/89294549。
 
-![Image](https://github.com/user-attachments/assets/3f21ac56-5dce-4cb9-9f7e-ef0ecb7c6ff2)
+![gamewinbackground](https://github.com/user-attachments/assets/b7ab55c8-7dae-4cb7-8de3-9fc3099880e4)
 
 以下为局内效果
 
